@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>This is my TransformTestDemo .. </title>
+		<style type="text/css">
+			*,
+			*:after,
+			*:before {
+				/* 设置盒子模型的类别,当前类别的盒子高度和宽度包含盒子的边框和内边距 
+				默认属性为content-box 所设置的盒子的宽度和高度仅仅包括内容体的宽度和高度
+				*/
+				box-sizing: border-box;
+			}
+
+			body {
+				background: #F5F3F4;
+				margin: 0;
+				padding: 10px;
+				/* 建议在font-famliy中加上sans-serif属性，
+			  这样做的好处是当设置的字体无法使用时,
+			  浏览器会默认使用sans-serif字体 */
+				font-family: 'Open Sans', sans-serif;
+				text-align: center;
+			}
+
+			h1 {
+				color: #4c4c4c;
+				font-weight: 600;
+				border-bottom: 1px solid #ccc;
+			}
+
+			h2,
+			h4 {
+				font-weight: 400;
+				color: #4d4d4d;
+			}
+
+			/* 最外层div的相关样式 */
+			.card {
+				/* 展示为行内块元素 */
+				display: inline-block;
+				margin: 10px;
+				background: #fff;
+				padding: 15px;
+				min-width: 200px;
+				/* 设置盒子的阴影 */
+				box-shadow: 0 3px 5px #ddd;
+				color: #555;
+			}
+
+			.card .box {
+				width: 100px;
+				height: 100px;
+				margin: auto;
+				background: #ddd;
+				/* 设置鼠标样式为手指 */
+				cursor: pointer;
+				box-shadow: 0 0 5px #ccc inset;
+			}
+
+			.card .box .fill {
+				width: 100px;
+				height: 100px;
+				position: relative;
+				background: #03A9F4;
+				opacity: 0.6;
+				box-shadow: 0 0 5px #ccc;
+				/* 设置样式改变所需要的时间
+				兼容Safari和Chrome浏览器 */
+				-webkit-transition: 0.5s;
+				transition: 0.5s;
+			}
+
+			.card p {
+				margin: 25px 0 0;
+			}
+
+			/* 旋转属性设置 */
+			/* 默认 */
+			.rotate:hover .fill {
+				-webkit-transform: rotate(45deg);
+				transform: rotate(45deg);
+			}
+
+			/* 以X轴为基准旋转*/
+			.rotateX:hover .fill {
+				-webkit-transform: rotateX(45deg);
+				transform: rotateX(45deg);
+			}
+
+			/* 以Y轴为基准旋转 */
+			.rotateY:hover .fill {
+				-webkit-transform: rotateY(45deg);
+				transform: rotateY(45deg);
+			}
+
+			/* 以Z轴为基准旋转 */
+			.rotateZ:hover .fill {
+				-webkit-transform: rotateZ(45deg);
+				transform: rotateZ(45deg);
+			}
+
+			/* 缩放属性 (数值大于1为扩大,数值小于1为缩小) */
+			/* XY轴同时缩放 */
+			.scale:hover .fill {
+				-webkit-transform: scale(2, 2);
+				transform: scale(2, 2);
+			}
+
+			/* 沿X轴方向缩放 */
+			.scaleX:hover .fill {
+				-webkit-transform: scaleX(2);
+				transform: scaleX(2);
+			}
+
+			/* 沿Y轴方向缩放 */
+			.scaleY:hover .fill {
+				-webkit-transform: scaleY(2);
+				transform: scaleY(2);
+			}
+			/* 倾斜属性 */
+			/* XY轴同时倾斜 */
+			.skew:hover .fill {
+				-webkit-transform: skew(45deg, 45deg);
+				transform: skew(45deg, 45deg);
+			}
+			/* Y轴高度不变，X轴方向倾斜 */
+			.skewX:hover .fill {
+				-webkit-transform: skewX(45deg);
+				transform: skewX(45deg);
+			}
+			/* X轴方向不变，Y轴方向倾斜 */
+			.skewY:hover .fill {
+				-webkit-transform: skewY(45deg);
+				transform: skewY(45deg);
+			}
+			/* 移动、滑动属性 */
+			/* 沿X轴Y轴分别移动 */
+			.translate:hover .fill {
+				-webkit-transform: translate(45px, 1em);
+				transform: translate(45px, 1em);
+			}
+			/* 沿X轴移动 */
+			.translateX:hover .fill {
+				-webkit-transform: translateX(45px);
+				transform: translateX(45px);
+			}
+			/* 沿Y轴移动 */
+			.translateY:hover .fill {
+				-webkit-transform: translateY(45px);
+				transform: translateY(45px);
+			}
+			/* 矩阵变形属性 */
+			.matrix:hover .fill {
+				-webkit-transform: matrix(2, 2, 0, 2, 0, 0);
+				transform: matrix(2, 2, 0, 2, 0, 0);
+			}
+			/* 透视属性 */
+			/* perspective相当于z坐标*/
+			.perspective-100 .box {
+				-webkit-perspective: 100px;
+				perspective: 100px;
+			}
+
+			.perspective-200 .box {
+				-webkit-perspective: 200px;
+				perspective: 200px;
+			}
+
+			.to-100-0-0 {
+				-webkit-transform-origin: 100% 0 0;
+				transform-origin: 100% 0 0;
+			}
+
+			.to-0-100-0 {
+				-webkit-transform-origin: 0 100% 0;
+				transform-origin: 0 100% 0;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>TransformTestDemo</h1>
+		<!-- Rotate(旋转)属性-->
+		<div class="card">
+			<div class="box rotate">
+				<div class="fill"></div>
+			</div>
+			<p>旋转(45deg) </p>
+		</div>
+		<div class="card">
+			<div class="box rotateX">
+				<div class="fill"></div>
+			</div>
+			<p>沿X轴旋转(45deg)</p>
+		</div>
+		<div class="card">
+			<div class="box rotateY">
+				<div class="fill"></div>
+			</div>
+			<p>沿Y轴旋转(45deg)</p>
+		</div>
+		<div class="card">
+			<div class="box rotateZ">
+				<div class="fill"></div>
+			</div>
+			<p>沿Z轴旋转(45deg) </p>
+		</div>
+		<!-- scale(缩放)属性-->
+		<div class="card">
+			<div class="box scale">
+				<div class="fill"></div>
+			</div>
+			<p>X轴Y轴同时扩大2倍</p>
+		</div>
+		<div class="card">
+			<div class="box scaleX">
+				<div class="fill"></div>
+			</div>
+			<p>X轴扩大2倍</p>
+		</div>
+		<div class="card">
+			<div class="box scaleY">
+				<div class="fill"></div>
+			</div>
+			<p>Y轴扩大2倍</p>
+		</div>
+		<!-- skew(倾斜)属性-->
+		<div class="card">
+			<div class="box skew">
+				<div class="fill"></div>
+			</div>
+			<p>XY轴同时倾斜45度</p>
+		</div>
+		<div class="card">
+			<div class="box skewX">
+				<div class="fill"></div>
+			</div>
+			<p>沿X轴倾斜45度</p>
+		</div>
+		<div class="card">
+			<div class="box skewY">
+				<div class="fill"></div>
+			</div>
+			<p>沿Y轴倾斜45度</p>
+		</div>
+		<!-- translate(移动、滑动属性)-->
+		<div class="card">
+			<div class="box translate">
+				<div class="fill"></div>
+			</div>
+			<p>沿X轴Y轴分别移动45px</p>
+		</div>
+		<div class="card">
+			<div class="box translateX">
+				<div class="fill"></div>
+			</div>
+			<p>沿X轴移动45px</p>
+		</div>
+		<div class="card">
+			<div class="box translateY">
+				<div class="fill"></div>
+			</div>
+			<p>沿Y轴移动45px</p>
+		</div>
+		<div class="card">
+			<div class="box matrix">
+				<div class="fill"></div>
+			</div>
+			<p> 矩阵变形</p>
+		</div>
+		<h4>Perspective : 100</h4>
+		<div class="perspective-100">
+			<div class="card">
+				<div class="box rotateX">
+					<div class="fill"></div>
+				</div>
+				<p>视图距离为100px时 沿X轴旋转45度</p>
+			</div>
+			<div class="card">
+				<div class="box rotateY">
+					<div class="fill"></div>
+				</div>
+				<p>视图距离为100px时 沿Y轴旋转45度</p>
+			</div>
+		</div>
+		<h4>Perspective : 200</h4>
+		<div class="perspective-200">
+			<div class="card">
+				<div class="box rotateX">
+					<div class="fill"></div>
+				</div>
+				<p>视图距离为200px时 沿X轴旋转45度</p>
+			</div>
+			<div class="card">
+				<div class="box rotateY">
+					<div class="fill"></div>
+				</div>
+				<p>视图距离为200px时 沿Y轴旋转45度</p>
+			</div>
+		</div>
+		<!-- transform origin-->
+		<h2>Transform origin</h2>
+		<div class="card">
+			<div class="box rotate">
+				<div class="fill to-100-0-0"></div>
+			</div>
+			<p>以右上角顶点为基准点<br />旋转45度</p>
+		</div>
+		<div class="card">
+			<div class="box rotate">
+				<div class="fill to-0-100-0"></div>
+			</div>
+			<p>以左下角顶点为基准点<br />旋转45度</p>
+		</div>
+		<div class="card perspective-200">
+			<div class="box rotateX">
+				<div class="fill to-100-0-0"></div>
+			</div>
+			<p>以右上角顶点为基准点<br />沿X轴旋转45度</p>
+		</div>
+		<div class="card perspective-200">
+			<div class="box rotateX">
+				<div class="fill to-0-100-0"></div>
+			</div>
+			<p>以左下角顶点为基准点<br />沿X轴旋转45度</p>
+		</div>
+		<div class="card perspective-200">
+			<div class="box rotateY">
+				<div class="fill to-0-100-0"></div>
+			</div>
+			<p>以右上角顶点为基准点<br />沿Y轴旋转45度</p>
+		</div>
+		<div class="card perspective-200">
+			<div class="box rotateY">
+				<div class="fill to-100-0-0"></div>
+			</div>
+			<p>以左下角顶点为基准点<br />沿Y轴旋转45度</p>
+		</div>
+		<div class="card">
+			<div class="box scale">
+				<div class="fill to-100-0-0"></div>
+			</div>
+			<p>以右上角顶点为基准点<br />X、Y轴同时放大2倍</p>
+		</div>
+		<div class="card">
+			<div class="box scale">
+				<div class="fill to-0-100-0"></div>
+			</div>
+			<p>以左下角顶点为基准点<br />X、Y轴同时放大2倍</p>
+		</div>
+		<div class="card">
+			<div class="box scaleX">
+				<div class="fill to-100-0-0"></div>
+			</div>
+			<p>以右上角顶点为基准点<br />X轴方向放大2倍</p>
+		</div>
+		<div class="card">
+			<div class="box scaleX">
+				<div class="fill to-0-100-0"></div>
+			</div>
+			<p>以左下角顶点为基准点<br />X轴方向放大2倍</p>
+		</div>
+		<div class="card">
+			<div class="box scaleY">
+				<div class="fill to-100-0-0"></div>
+			</div>
+			<p>以右上角顶点为基准点<br />Y轴方向放大2倍</p>
+		</div>
+		<div class="card">
+			<div class="box scaleY">
+				<div class="fill to-0-100-0"></div>
+			</div>
+			<p>以左下角顶点为基准点<br />Y轴方向放大2倍</p>
+		</div>
+	</body>
+</html>
